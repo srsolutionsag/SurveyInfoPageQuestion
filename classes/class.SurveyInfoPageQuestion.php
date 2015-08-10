@@ -60,6 +60,10 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 	 * @param bool  $a_return
 	 */
 	public function saveUserInput(array $post_data, $active_id, $a_return = false) {
+		if(!$active_id) {
+			return false;
+		}
+
 		unset($post_data);
 		unset($a_return);
 		$entered_value = 1;
