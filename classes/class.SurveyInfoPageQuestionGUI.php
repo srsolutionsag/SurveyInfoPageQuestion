@@ -71,6 +71,14 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI {
 	}
 
 
+	/**
+	 * @return string
+	 */
+	public function getParsedAnswers() {
+		return '-';
+	}
+
+
 	protected function initObject() {
 		$this->object = new SurveyInfoPageQuestion();
 	}
@@ -112,14 +120,14 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI {
 
 	/**
 	 * @param string $working_data
-	 * @param int    $question_title
-	 * @param int    $show_questiontext
+	 * @param int $question_title
+	 * @param int $show_questiontext
 	 * @param string $error_message
-	 * @param null   $survey_id
+	 * @param null $survey_id
 	 *
 	 * @return string
 	 */
-	public function getWorkingForm($working_data = '', $question_title = 1, $show_questiontext = 1, $error_message = '', $survey_id = NULL) {
+	public function getWorkingForm($working_data = '', $question_title = 1, $show_questiontext = 1, $error_message = '', $survey_id = null) {
 		return $this->object->getQuestiontext();
 	}
 
@@ -149,7 +157,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI {
 		$finalstatement->addPlugin('latex');
 		$finalstatement->addButton('latex');
 		$finalstatement->addButton('pastelatex');
-		$finalstatement->setRTESupport($this->object->getId(), 'svy', 'survey', NULL, true);
+		$finalstatement->setRTESupport($this->object->getId(), 'svy', 'survey', null, true);
 
 		$a_form->addItem($finalstatement);
 	}
