@@ -49,15 +49,4 @@ class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin {
 
 		return self::$cache;
 	}
-
-
-	/**
-	 * @param $a_var
-	 * @return mixed|string
-	 */
-	public function txt($a_var) {
-		require_once('./Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php');
-
-		return sragPluginTranslator::getInstance($this)->rebuild()->write()->txt($a_var);
-	}
 }
