@@ -57,7 +57,8 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 	/**
 	 * @param array $post_data
 	 * @param       $active_id
-	 * @param bool  $a_return
+	 * @param bool $a_return
+	 * @return bool
 	 */
 	public function saveUserInput(array $post_data, $active_id, $a_return = false) {
 		if(!$active_id) {
@@ -87,6 +88,8 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 			(strlen($entered_value)) ? $entered_value : NULL,
 			time()
 		));
+
+		return true;
 	}
 
 
@@ -95,7 +98,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 	 * @param $nr_of_users
 	 * @param $finished_ids
 	 *
-	 * @return int
+	 * @return array
 	 */
 	public function getCumulatedResults($survey_id, $nr_of_users, $finished_ids) {
 		global $ilDB;
@@ -188,7 +191,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 			$data = $ilDB->fetchObject($result);
 			$this->setId($data->question_id);
 			$this->setTitle($data->title);
-			$this->label = $data->label;
+//			$this->label = $data->label;
 			$this->setDescription($data->description);
 			$this->setObjId($data->obj_fi);
 			$this->setAuthor($data->author);
@@ -241,5 +244,3 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 		return $this->info_page_text;
 	}
 }
-
-?>
