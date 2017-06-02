@@ -21,6 +21,10 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI {
 	 * @var SurveyInfoPageQuestion
 	 */
 	public $object;
+	/**
+	 * @var ilCtrl
+	 */
+	protected $ctrl;
 
 
 	/**
@@ -151,7 +155,6 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI {
 		$finalstatement = new ilTextAreaInputGUI($this->plugin_object->txt(self::FIELD_NAME), self::FIELD_NAME);
 		$finalstatement->setValue($this->object->prepareTextareaOutput($this->object->getQuestiontext()));
 		$finalstatement->setRows(30);
-		$finalstatement->setCols(80);
 		$finalstatement->setUseRte(true);
 		$finalstatement->setRteTags(ilObjAdvancedEditing::_getUsedHTMLTags('survey'));
 		$finalstatement->addPlugin('latex');
@@ -180,4 +183,3 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI {
 	}
 }
 
-?>
