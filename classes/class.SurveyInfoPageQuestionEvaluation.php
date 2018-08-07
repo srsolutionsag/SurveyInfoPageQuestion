@@ -1,5 +1,6 @@
 <?php
 require_once('./Modules/SurveyQuestionPool/classes/class.SurveyQuestionEvaluation.php');
+require_once('./Modules/SurveyQuestionPool/classes/class.ilSurveyCategory.php');
 
 /**
  * Class SurveyInfoPageQuestionEvaluation
@@ -15,7 +16,7 @@ class SurveyInfoPageQuestionEvaluation extends SurveyQuestionEvaluation {
 	 */
 	public function addUserSpecificResults(array &$a_row, $a_user_id, $a_results) {
 		if($a_results instanceof ilSurveyEvaluationResults) {
-			$a_results->addVariable(new ilSurveyEvaluationResultsVariable('lorem', 5, 0.5));
+			$a_results->addVariable(new ilSurveyEvaluationResultsVariable(new ilSurveyCategory('Info'), 5, 0.5));
 		}
 	}
 
