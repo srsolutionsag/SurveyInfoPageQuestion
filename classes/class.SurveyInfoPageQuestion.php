@@ -191,7 +191,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 			$data = $ilDB->fetchObject($result);
 			$this->setId($data->question_id);
 			$this->setTitle($data->title);
-//			$this->label = $data->label;
+			$this->label = $data->label;
 			$this->setDescription($data->description);
 			$this->setObjId($data->obj_fi);
 			$this->setAuthor($data->author);
@@ -242,5 +242,61 @@ class SurveyInfoPageQuestion extends SurveyQuestion {
 	 */
 	public function getInfoPageText() {
 		return $this->info_page_text;
+	}
+
+	/**
+	 * Adds the survey info page question XML to a given XMLWriter object
+	 *
+	 * @param object $a_xml_writer The XMLWriter object
+	 * @param boolean $a_include_header Determines wheather or not the XML should be used
+	 * @access public
+	 */
+	function insertXML(&$a_xml_writer, $a_include_header = TRUE)
+	{
+		$attrs = array(
+			"id" => $this->getId(),
+			"title" => $this->getTitle(),
+			"type" => $this->getQuestiontype(),
+			"obligatory" => $this->getObligatory()
+		);
+
+		$a_xml_writer->xmlStartTag("question", $attrs);
+
+		$a_xml_writer->xmlElement("description", NULL, $this->getDescription());
+		$a_xml_writer->xmlElement("author", NULL, $this->getAuthor());
+
+		if (strlen($this->label))
+		{
+			$attrs = array(
+				"label" => $this->label,
+			);
+		}
+		else
+		{
+			$attrs = array();
+		}
+		$a_xml_writer->xmlStartTag("questiontext", $attrs);
+		$this->addMaterialTag($a_xml_writer, $this->getQuestiontext());
+		$a_xml_writer->xmlEndTag("questiontext");
+
+		if (count($this->material))
+		{
+			if (preg_match("/il_(\d*?)_(\w+)_(\d+)/", $this->material["internal_link"], $matches))
+			{
+				$attrs = array(
+					"label" => $this->material["title"]
+				);
+				$a_xml_writer->xmlStartTag("material", $attrs);
+				$intlink = "il_" . IL_INST_ID . "_" . $matches[2] . "_" . $matches[3];
+				if (strcmp($matches[1], "") != 0)
+				{
+					$intlink = $this->material["internal_link"];
+				}
+				$a_xml_writer->xmlElement("mattext", NULL, $intlink);
+				$a_xml_writer->xmlEndTag("material");
+			}
+		}
+
+		$a_xml_writer->xmlEndTag("question");
 	}
 }
