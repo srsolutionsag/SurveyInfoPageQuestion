@@ -1,6 +1,6 @@
 <?php
 require_once('./Customizing/global/plugins/Modules/SurveyQuestionPool/SurveyQuestions/SurveyInfoPageQuestion/classes/class.SurveyInfoPageQuestion.php');
-require_once('./Modules/SurveyQuestionPool/classes/class.SurveyQuestionGUI.php');
+require_once('./Modules/SurveyQuestionPool/Questions/class.SurveyQuestionGUI.php');
 require_once('./Services/Object/classes/class.ilObject2.php');
 
 /**
