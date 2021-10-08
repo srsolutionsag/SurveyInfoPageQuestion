@@ -16,6 +16,11 @@ class SurveyInfoPageQuestion extends SurveyQuestion
         return '';
     }
 
+    public function deleteAdditionalTableData($question_id)
+    {
+        // nothing to do here since we do not have a table
+    }
+
     /**
      * @return array
      */
