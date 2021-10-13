@@ -1,6 +1,7 @@
 <?php
 require_once('./Modules/SurveyQuestionPool/classes/class.SurveyQuestionEvaluation.php');
 require_once('./Modules/SurveyQuestionPool/classes/class.ilSurveyCategory.php');
+require_once('class.SurveyInfoPageQuestion.php');
 
 /**
  * Class SurveyInfoPageQuestionEvaluation
