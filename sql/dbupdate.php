@@ -1,6 +1,7 @@
 <#1>
 <?php
-$res = $ilDB->queryF('SELECT * FROM svy_qtype WHERE type_tag = %s', array( 'text' ), array( 'SurveyInfoPageQuestion' ));
+/** @noinspection PhpUndefinedVariableInspection */
+$res = $ilDB->queryF('SELECT * FROM svy_qtype WHERE type_tag = %s', array('text' ), array('SurveyInfoPageQuestion' ));
 if ($res->numRows() == 0) {
 	$res = $ilDB->query('SELECT MAX(questiontype_id) maxid FROM svy_qtype');
 	$data = $ilDB->fetchAssoc($res);

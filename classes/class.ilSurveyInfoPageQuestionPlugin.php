@@ -3,6 +3,7 @@ require_once('./Modules/SurveyQuestionPool/classes/class.ilSurveyQuestionsPlugin
 
 /**
  * Class ilSurveyInfoPageQuestionPlugin
+ *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin

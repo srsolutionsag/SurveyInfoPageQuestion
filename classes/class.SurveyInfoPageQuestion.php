@@ -3,6 +3,7 @@ require_once('./Services/RTE/classes/class.ilRTE.php');
 
 /**
  * Class SurveyInfoPageQuestion
+ *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 class SurveyInfoPageQuestion extends SurveyQuestion
@@ -124,7 +125,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
         $result = $ilDB->query($sql);
         while ($row = $ilDB->fetchAssoc($result)) {
             $cumulated[$row['value']]++;
-            array_push($textvalues, $row['textanswer']);
+            $textvalues[] = $row['textanswer'];
         }
         asort($cumulated, SORT_NUMERIC);
         end($cumulated);
@@ -143,6 +144,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
 
     /**
      * Creates a the cumulated results data for the question
+     *
      * @param $survey_id
      * @param $counter
      * @param $finished_ids
@@ -154,6 +156,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
 
     /**
      * Returns an array containing all answers to this question in a given survey
+     *
      * @param integer $survey_id The database ID of the survey
      * @param         $finished_ids
      * @return array An array containing the answers to the question. The keys are either the user id or the anonymous id
@@ -250,6 +253,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
 
     /**
      * Adds the survey info page question XML to a given XMLWriter object
+     *
      * @param object  $a_xml_writer     The XMLWriter object
      * @param boolean $a_include_header Determines wheather or not the XML should be used
      * @access public

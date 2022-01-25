@@ -3,12 +3,12 @@ require_once('class.SurveyInfoPageQuestion.php');
 
 /**
  * Class SurveyInfoPageQuestionGUI
+ *
  * @author            Fabian Schmid <fs@studer-raimann.ch>
  * @ilCtrl_IsCalledBy SurveyInfoPageQuestionGUI: ilObjSurveyQuestionPoolGUI, ilSurveyEditorGUI
  */
 class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
 {
-
     const FIELD_NAME = 'field_info_page';
     /**
      * @var ilSurveyInfoPageQuestionPlugin
@@ -49,8 +49,10 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
                 $ilTabs->clearTargets();
                 $ilCtrl->setParameterByClass('ilObjSurveyQuestionPoolGUI', 'ref_id', $_GET['ref_id']);
                 $title = ilObject2::_lookupTitle(ilObject2::_lookupObjId($_GET['ref_id']));
-                $ilTabs->setBackTarget($title,
-                    $ilCtrl->getLinkTargetByClass('ilObjSurveyQuestionPoolGUI', 'questions'));
+                $ilTabs->setBackTarget(
+                    $title,
+                    $ilCtrl->getLinkTargetByClass('ilObjSurveyQuestionPoolGUI', 'questions')
+                );
                 $ilTabs->addTab('preview', $this->plugin_object->txt('common_preview'), '');
                 $ret =& $this->$cmd();
                 break;
@@ -127,11 +129,12 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
      * @return string
      */
     public function getWorkingForm(
-        $working_data = '',
+        $working_data = "",
         $question_title = 1,
         $show_questiontext = 1,
-        $error_message = '',
-        $survey_id = null
+        $error_message = "",
+        $survey_id = null,
+        $compress_view = false
     ) {
         return $this->object->getQuestiontext();
     }
@@ -182,4 +185,3 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
         $a_form->removeItemByPostVar('obligatory');
     }
 }
-
