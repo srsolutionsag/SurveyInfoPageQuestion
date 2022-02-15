@@ -10,7 +10,7 @@ require_once('class.SurveyInfoPageQuestion.php');
  */
 class SurveyInfoPageQuestionEvaluation extends SurveyQuestionEvaluation
 {
-
+    
     /**
      * @param array                           $a_row
      * @param int                             $a_user_id
@@ -22,7 +22,7 @@ class SurveyInfoPageQuestionEvaluation extends SurveyQuestionEvaluation
             $a_results->addVariable(new ilSurveyEvaluationResultsVariable(new ilSurveyCategory('Info'), 5, 0.5));
         }
     }
-
+    
     /**
      * @param array|ilSurveyEvaluationResults $a_results
      * @return bool

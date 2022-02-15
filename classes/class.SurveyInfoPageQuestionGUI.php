@@ -22,7 +22,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
      * @var ilCtrl
      */
     protected $ctrl;
-
+    
     /**
      * @param $a_id
      */
@@ -31,7 +31,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
         parent::__construct($a_id);
         $this->plugin_object = new ilSurveyInfoPageQuestionPlugin();
     }
-
+    
     /**
      * @return mixed
      */
@@ -41,7 +41,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
         $cmd = $this->ctrl->getCmd();
         switch ($cmd) {
             case 'preview':
-
+                
                 /**
                  * @var $ilTabs ilTabsGUI
                  * @var $ilCtrl ilCtrl
@@ -60,20 +60,20 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
                 $ret =& $this->$cmd();
                 break;
         }
-
+        
         return $ret;
     }
-
+    
     /**
      * @return string
      */
     public function getQuestionType()
     {
         $plugin_object = new ilSurveyInfoPageQuestionPlugin();
-
+        
         return $plugin_object->getPrefix() . '_common_question_type';
     }
-
+    
     /**
      * @return string
      */
@@ -81,17 +81,17 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
     {
         return '-';
     }
-
+    
     protected function initObject()
     {
         $this->object = new SurveyInfoPageQuestion();
     }
-
+    
     public function setQuestionTabs()
     {
         // TODO: Implement setQuestionTabs() method.
     }
-
+    
     /**
      * @param ilPropertyFormGUI $a_form
      */
@@ -101,7 +101,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
         $this->addHiddenFields();
         $this->addTiny($a_form);
     }
-
+    
     /**
      * @param ilPropertyFormGUI $a_form
      */
@@ -109,7 +109,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
     {
         $this->object->setQuestiontext($a_form->getInput(self::FIELD_NAME));
     }
-
+    
     /**
      * @param int $question_title
      * @param int $show_questiontext
@@ -119,7 +119,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
     {
         return $this->getWorkingForm();
     }
-
+    
     /**
      * @param string $working_data
      * @param int    $question_title
@@ -138,7 +138,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
     ) {
         return $this->object->getQuestiontext();
     }
-
+    
     /**
      * @param $survey_id
      * @param $counter
@@ -148,7 +148,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
     {
         // TODO: Implement getCumulatedResultsDetails() method.
     }
-
+    
     /**
      * @param ilPropertyFormGUI $a_form
      * @internal param $ilUser
@@ -164,10 +164,10 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
         $finalstatement->addButton('latex');
         $finalstatement->addButton('pastelatex');
         $finalstatement->setRTESupport($this->object->getId(), 'svy', 'survey', null, true);
-
+        
         $a_form->addItem($finalstatement);
     }
-
+    
     protected function addHiddenFields()
     {
         $question_hidden = new ilHiddenInputGUI('question');
@@ -175,7 +175,7 @@ class SurveyInfoPageQuestionGUI extends SurveyQuestionGUI
         $question_hidden = new ilHiddenInputGUI('obligatory');
         $question_hidden->setValue(false);
     }
-
+    
     /**
      * @param ilPropertyFormGUI $a_form
      */

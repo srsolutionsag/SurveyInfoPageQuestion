@@ -8,13 +8,13 @@ require_once('./Modules/SurveyQuestionPool/classes/class.ilSurveyQuestionsPlugin
  */
 class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin
 {
-
+    
     const SURVEY_INFO_PAGE_QUESTION = 'SurveyInfoPageQuestion';
     /**
      * @var ilSurveyInfoPageQuestionPlugin
      */
     protected static $cache;
-
+    
     /**
      * @return string
      */
@@ -22,7 +22,7 @@ class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin
     {
         return self::SURVEY_INFO_PAGE_QUESTION;
     }
-
+    
     /**
      * @return string
      */
@@ -30,7 +30,7 @@ class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin
     {
         return self::SURVEY_INFO_PAGE_QUESTION;
     }
-
+    
     /**
      * @return string
      */
@@ -38,7 +38,7 @@ class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin
     {
         return $this->txt('common_question_type');
     }
-
+    
     /**
      * @return ilSurveyInfoPageQuestionPlugin
      */
@@ -47,7 +47,7 @@ class ilSurveyInfoPageQuestionPlugin extends ilSurveyQuestionsPlugin
         if (!isset(self::$cache)) {
             self::$cache = new self();
         }
-
+        
         return self::$cache;
     }
 }

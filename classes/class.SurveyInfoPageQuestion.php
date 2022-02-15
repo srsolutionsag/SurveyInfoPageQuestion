@@ -8,7 +8,7 @@ require_once('./Services/RTE/classes/class.ilRTE.php');
  */
 class SurveyInfoPageQuestion extends SurveyQuestion
 {
-
+    
     /**
      * @return string
      */
@@ -16,18 +16,18 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     {
         return '';
     }
-
+    
     public function deleteAdditionalTableData($question_id)
     {
         // nothing to do here since we do not have a table
     }
-
+    
     /**
      * @return array
      */
     public function _getQuestionDataArray()
     {
-        return array(
+        return [
             'question_id' => $this->getId(),
             'questiontype_fi' => $this->getQuestionTypeID(),
             'obj_fi' => $this->getObjId(),
@@ -43,9 +43,9 @@ class SurveyInfoPageQuestion extends SurveyQuestion
             'questiontext' => $this->getQuestiontext(),
             'label' => '',
             'question_fi' => $this->getId(),
-        );
+        ];
     }
-
+    
     /**
      * @param array $post_data
      * @param       $survey_id
@@ -55,10 +55,10 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     {
         unset($post_data);
         unset($survey_id);
-
+        
         return "";
     }
-
+    
     /**
      * @param array $post_data
      * @param       $active_id
@@ -70,7 +70,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
         if (!$active_id) {
             return false;
         }
-
+        
         unset($post_data);
         unset($a_return);
         $entered_value = 1;
@@ -79,26 +79,29 @@ class SurveyInfoPageQuestion extends SurveyQuestion
          * @var $ilDB ilDB
          */
         $next_id = $ilDB->nextId('svy_answer');
-        $ilDB->manipulateF("INSERT INTO svy_answer (answer_id, question_fi, active_fi, value, textanswer, tstamp) VALUES (%s, %s, %s, %s, %s, %s)",
-            array(
+        $ilDB->manipulateF(
+            "INSERT INTO svy_answer (answer_id, question_fi, active_fi, value, textanswer, tstamp) VALUES (%s, %s, %s, %s, %s, %s)",
+            [
                 'integer',
                 'integer',
                 'integer',
                 'float',
                 'text',
                 'integer'
-            ), array(
+            ],
+            [
                 $next_id,
                 $this->getId(),
                 $active_id,
                 null,
                 (strlen($entered_value)) ? $entered_value : null,
                 time()
-            ));
-
+            ]
+        );
+        
         return true;
     }
-
+    
     /**
      * @param $survey_id
      * @param $nr_of_users
@@ -108,20 +111,20 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     public function getCumulatedResults($survey_id, $nr_of_users, $finished_ids)
     {
         global $ilDB;
-
+        
         $question_id = $this->getId();
-
-        $result_array = array();
-        $cumulated = array();
-        $textvalues = array();
-
+        
+        $result_array = [];
+        $cumulated = [];
+        $textvalues = [];
+        
         $sql = 'SELECT svy_answer.* FROM svy_answer' . ' JOIN svy_finished ON (svy_finished.finished_id = svy_answer.active_fi)'
             . ' WHERE svy_answer.question_fi = ' . $ilDB->quote($question_id, 'integer')
             . ' AND svy_finished.survey_fi = ' . $ilDB->quote($survey_id, 'integer');
         if ($finished_ids) {
             $sql .= ' AND ' . $ilDB->in('svy_finished.finished_id', $finished_ids, '', 'integer');
         }
-
+        
         $result = $ilDB->query($sql);
         while ($row = $ilDB->fetchAssoc($result)) {
             $cumulated[$row['value']]++;
@@ -131,17 +134,17 @@ class SurveyInfoPageQuestion extends SurveyQuestion
         end($cumulated);
         $numrows = $result->numRows();
         $pl = ilSurveyInfoPageQuestionPlugin::getPlugin();
-
+        
         $result_array['USERS_ANSWERED'] = $numrows;
         $result_array['USERS_SKIPPED'] = $nr_of_users - $numrows;
         $result_array['USERS_SKIPPED'] = '-';
         $result_array['QUESTION_TYPE'] = $pl->getPrefix() . '_common_question_type';
         $result_array['textvalues'] = $textvalues;
-
+        
         return $result_array;
     }
-
-
+    
+    
     /**
      * Creates a the cumulated results data for the question
      *
@@ -153,7 +156,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     //	public function getCumulatedResultData($survey_id, $counter, $finished_ids) {
     //		return array();
     //	}
-
+    
     /**
      * Returns an array containing all answers to this question in a given survey
      *
@@ -165,13 +168,17 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     public function getUserAnswers($survey_id, $finished_ids)
     {
         global $ilDB;
-
-        $answers = array();
-
-        $sql = "SELECT svy_answer.* FROM svy_answer, svy_finished" . " WHERE svy_finished.survey_fi = " . $ilDB->quote($survey_id,
-                "integer")
-            . " AND svy_answer.question_fi = " . $ilDB->quote($this->getId(),
-                "integer") . " AND svy_finished.finished_id = svy_answer.active_fi";
+        
+        $answers = [];
+        
+        $sql = "SELECT svy_answer.* FROM svy_answer, svy_finished" . " WHERE svy_finished.survey_fi = " . $ilDB->quote(
+                $survey_id,
+                "integer"
+            )
+            . " AND svy_answer.question_fi = " . $ilDB->quote(
+                $this->getId(),
+                "integer"
+            ) . " AND svy_finished.finished_id = svy_answer.active_fi";
         if ($finished_ids) {
             $sql .= " AND " . $ilDB->in("svy_finished.finished_id", $finished_ids, "", "integer");
         }
@@ -179,10 +186,10 @@ class SurveyInfoPageQuestion extends SurveyQuestion
         while ($row = $ilDB->fetchAssoc($result)) {
             $answers[$row["active_fi"]] = $row["textanswer"];
         }
-
+        
         return $answers;
     }
-
+    
     /**
      * @param int $question_id
      */
@@ -192,9 +199,12 @@ class SurveyInfoPageQuestion extends SurveyQuestion
          * @var $ilDB ilDB
          */
         global $ilDB;
-        $result = $ilDB->queryF('SELECT svy_question.* FROM svy_question WHERE svy_question.question_id = %s',
-            array('integer'), array($question_id));
-
+        $result = $ilDB->queryF(
+            'SELECT svy_question.* FROM svy_question WHERE svy_question.question_id = %s',
+            ['integer'],
+            [$question_id]
+        );
+        
         if ($result->numRows() == 1) {
             $data = $ilDB->fetchObject($result);
             $this->setId($data->question_id);
@@ -211,7 +221,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
         }
         parent::loadFromDb($question_id);
     }
-
+    
     /**
      * @return bool
      */
@@ -219,22 +229,22 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     {
         return true;
     }
-
+    
     /**
      * @return string
      */
     public function getQuestionType()
     {
         $plugin_object = new ilSurveyInfoPageQuestionPlugin();
-
+        
         return $plugin_object->getQuestionType();
     }
-
+    
     /**
      * @var string
      */
     protected $info_page_text = '';
-
+    
     /**
      * @param string $info_page_text
      */
@@ -242,7 +252,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     {
         $this->info_page_text = $info_page_text;
     }
-
+    
     /**
      * @return string
      */
@@ -250,7 +260,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
     {
         return $this->info_page_text;
     }
-
+    
     /**
      * Adds the survey info page question XML to a given XMLWriter object
      *
@@ -260,34 +270,34 @@ class SurveyInfoPageQuestion extends SurveyQuestion
      */
     function insertXML(&$a_xml_writer, $a_include_header = true)
     {
-        $attrs = array(
+        $attrs = [
             "id" => $this->getId(),
             "title" => $this->getTitle(),
             "type" => $this->getQuestiontype(),
             "obligatory" => $this->getObligatory()
-        );
-
+        ];
+        
         $a_xml_writer->xmlStartTag("question", $attrs);
-
+        
         $a_xml_writer->xmlElement("description", null, $this->getDescription());
         $a_xml_writer->xmlElement("author", null, $this->getAuthor());
-
+        
         if (strlen($this->label)) {
-            $attrs = array(
+            $attrs = [
                 "label" => $this->label,
-            );
+            ];
         } else {
-            $attrs = array();
+            $attrs = [];
         }
         $a_xml_writer->xmlStartTag("questiontext", $attrs);
         $this->addMaterialTag($a_xml_writer, $this->getQuestiontext());
         $a_xml_writer->xmlEndTag("questiontext");
-
+        
         if (count($this->material)) {
             if (preg_match("/il_(\d*?)_(\w+)_(\d+)/", $this->material["internal_link"], $matches)) {
-                $attrs = array(
+                $attrs = [
                     "label" => $this->material["title"]
-                );
+                ];
                 $a_xml_writer->xmlStartTag("material", $attrs);
                 $intlink = "il_" . IL_INST_ID . "_" . $matches[2] . "_" . $matches[3];
                 if (strcmp($matches[1], "") != 0) {
@@ -297,7 +307,7 @@ class SurveyInfoPageQuestion extends SurveyQuestion
                 $a_xml_writer->xmlEndTag("material");
             }
         }
-
+        
         $a_xml_writer->xmlEndTag("question");
     }
 }
